@@ -4,7 +4,11 @@ import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment/index.js";
 import "components/Application.scss";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -16,16 +20,16 @@ export default function Application(props) {
   const setDay = (day) => {
     setState({ ...state, day });
   };
-  
+  const interviewers = getInterviewersForDay(state, state.day);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const schedule = dailyAppointments.map((appointment) => {
-    console.log(appointment.interview)
     const interview = getInterview(state, appointment.interview);
     return (
       <Appointment
         key={appointment.id}
         {...appointment}
         interview={interview}
+        interviewers={interviewers}
       />
     );
   });
@@ -43,7 +47,7 @@ export default function Application(props) {
         ...prev,
         days: all[0].data,
         appointments: all[1].data,
-        interviewers: all[2].data
+        interviewers: all[2].data,
       }));
     });
   }, []);
@@ -66,8 +70,9 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{schedule}
-      <Appointment key="last" time="5pm" />
+      <section className="schedule">
+        {schedule}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
