@@ -1,5 +1,5 @@
 import React from "react";
-
+// Used for "deleting"  and "saving"  an appointment
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">

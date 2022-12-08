@@ -11,17 +11,12 @@ import {
 } from "helpers/selectors";
 
 export default function Application(props) {
-  
-  const {
-    state,
-    setDay,
-    bookInterview,
-    cancelInterview
-  } = useApplicationData();
-
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
+  // Gets interview and appointment values for the Appointment component
   const interviewers = getInterviewersForDay(state, state.day);
   const appointments = getAppointmentsForDay(state, state.day).map(
-    appointment => {
+    (appointment) => {
       return (
         <Appointment
           key={appointment.id}
@@ -30,10 +25,11 @@ export default function Application(props) {
           interviewers={interviewers}
           bookInterview={bookInterview}
           cancelInterview={cancelInterview}
-          />
-          );
-        });
-        
+        />
+      );
+    }
+  );
+
   return (
     <main className="layout">
       <section className="sidebar">

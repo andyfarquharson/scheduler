@@ -1,3 +1,4 @@
+// Gets the appointments for the selescted day
 export function getAppointmentsForDay(state, day) {
   const results = [];
   const filteredDays = state.days.filter((d) => d.name === day);
@@ -9,7 +10,7 @@ export function getAppointmentsForDay(state, day) {
   }
   return results;
 }
-
+// Gets the interviewers for the selected day
 export function getInterviewersForDay(state, day) {
   const results = [];
   const filteredDays = state.days.filter((d) => d.name === day);
@@ -21,7 +22,7 @@ export function getInterviewersForDay(state, day) {
   }
   return results;
 }
-
+// Gets the particular interview
 export function getInterview(state, interview) {
   if (interview) {
     const interviewer = state.interviewers[interview.interviewer];

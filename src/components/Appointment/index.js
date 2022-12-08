@@ -20,10 +20,11 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_DELETE = "ERROR_DELETE";
   const ERROR_SAVE = "ERROR_SAVE";
-
+  // Sets the mode and keeps track of the history
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+  // Saves the information to the database
   const save = (name, interviewer) => {
     const interview = {
       student: name,
@@ -37,8 +38,8 @@ export default function Appointment(props) {
         transition(ERROR_SAVE, true);
         console.log(error);
       });
-  }; 
-
+  };
+  // Deletes an appointment from the database
   const deleteAppointment = () => {
     transition(DELETING, true);
     props
@@ -49,6 +50,7 @@ export default function Appointment(props) {
         console.log(error);
       });
   };
+
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
@@ -57,7 +59,7 @@ export default function Appointment(props) {
         <Show
           id={props.id}
           student={props.interview.student}
-          interviewer={props.interview.interviewer || {} }
+          interviewer={props.interview.interviewer || {}}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
@@ -65,8 +67,8 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form interviewers={props.interviewers} onCancel={back} onSave={save} />
       )}
-      {mode === SAVING && (<Status message="Saving" />)}
-      {mode === DELETING && (<Status message="Deleting" />)}
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM && (
         <Confirm
           onConfirm={deleteAppointment}
